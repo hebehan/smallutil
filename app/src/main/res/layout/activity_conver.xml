@@ -9,22 +9,31 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.hebe.test.smallutil.ConverActivity">
+    tools:context=".ConverActivity">
 
-    
+    <Button
+        android:id="@+id/startscan"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
+        android:text="点我扫描"/>
     <EditText
         android:id="@+id/converaddress_et"
         android:layout_width="230dp"
         android:layout_height="wrap_content"
+        android:layout_below="@id/startscan"
         android:hint="请输入推流地址"/>
     <Button
         android:id="@+id/cleanpaste"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_toRightOf="@id/converaddress_et"
+        android:layout_alignBaseline="@id/converaddress_et"
         android:textSize="12sp"
         android:text="清空并粘贴"/>
     <LinearLayout
+        android:id="@+id/buttonlayout"
         android:layout_width="match_parent"
         android:layout_below="@id/converaddress_et"
         android:orientation="horizontal"
@@ -48,4 +57,11 @@
             android:layout_height="wrap_content"
             android:text="flv"/>
     </LinearLayout>
+    <CheckBox
+        android:id="@+id/autoopen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttonlayout"
+        android:layout_marginTop="20dp"
+        android:text="自动打开推流端"/>
 </RelativeLayout>
