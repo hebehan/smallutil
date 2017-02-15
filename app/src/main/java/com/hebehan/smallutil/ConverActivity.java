@@ -14,7 +14,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.Checkable;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -51,10 +50,15 @@ public class ConverActivity extends AppCompatActivity implements View.OnClickLis
         startscan.setOnClickListener(this);
         autoopen.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                saveconfg("autoopen",isChecked?"true":"false");
             }
         });
+        if (getconfg("autoopen")=="true"){
+            autoopen.setChecked(true);
+        }else {
+            autoopen.setChecked(false);
+        }
     }
 
     @Override
@@ -136,14 +140,14 @@ public class ConverActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    public void saveaddress(String address){
+    public void saveconfg(String key,String address){
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        sp.edit().putString("address",address).commit();
+        sp.edit().putString(key,address).commit();
         sp = null;
     }
-    public String getaddress(){
+    public String getconfg(String key){
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        String add = sp.getString("address","");
+        String add = sp.getString(key,"");
         sp = null;
         return add;
     }
@@ -151,8 +155,8 @@ public class ConverActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onResume() {
         super.onResume();
-        addressET.setText(getaddress());
-        addressET.setSelection(getaddress().length());
+        addressET.setText(getconfg("address"));
+        addressET.setSelection(getconfg("address").length());
     }
 
     public void setText(String result){
@@ -161,7 +165,7 @@ public class ConverActivity extends AppCompatActivity implements View.OnClickLis
         ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
         cm.setText(result);
         showmsg("已将地址复制到剪切板");
-        saveaddress(result);
+        saveconfg("address",result);
         if (autoopen.isChecked()){
             openPackage(this,"com.pili.pldroid.playerdemo");
         }

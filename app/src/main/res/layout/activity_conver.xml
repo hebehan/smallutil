@@ -63,5 +63,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/buttonlayout"
         android:layout_marginTop="20dp"
+        android:checked="true"
         android:text="自动打开推流端"/>
 </RelativeLayout>
