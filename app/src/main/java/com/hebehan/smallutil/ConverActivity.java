@@ -54,10 +54,10 @@ public class ConverActivity extends AppCompatActivity implements View.OnClickLis
                 saveconfg("autoopen",isChecked?"true":"false");
             }
         });
-        if (getconfg("autoopen")=="true"){
-            autoopen.setChecked(true);
-        }else {
+        if (getconfg("autoopen")=="false"){
             autoopen.setChecked(false);
+        }else {
+            autoopen.setChecked(true);
         }
     }
 
@@ -167,7 +167,12 @@ public class ConverActivity extends AppCompatActivity implements View.OnClickLis
         showmsg("已将地址复制到剪切板");
         saveconfg("address",result);
         if (autoopen.isChecked()){
-            openPackage(this,"com.pili.pldroid.playerdemo");
+            try {
+                openPackage(this,"com.pili.pldroid.playerdemo");
+            }catch (Exception e){
+                showmsg("推流端未安装");
+            }
+
         }
     }
 
