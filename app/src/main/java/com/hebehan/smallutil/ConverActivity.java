@@ -167,9 +167,7 @@ public class ConverActivity extends AppCompatActivity implements View.OnClickLis
         showmsg("已将地址复制到剪切板");
         saveconfg("address",result);
         if (autoopen.isChecked()){
-            try {
-                openPackage(this,"com.pili.pldroid.playerdemo");
-            }catch (Exception e){
+            if (!openPackage(this,"com.pili.pldroid.playerdemo")){
                 showmsg("推流端未安装");
             }
 

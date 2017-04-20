@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         funclist = (ListView) findViewById(R.id.funclist);
-        funclist.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,new String[]{"APP列表","地址转换",getcpuinfo(),"跳转设置"}));
+        funclist.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,new String[]{"APP列表","地址转换",getcpuinfo(),"跳转设置","下载最新播放apk"}));
         funclist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> view, View view1, int i, long l) {
@@ -37,7 +37,13 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(MainActivity.this,ConverActivity.class));
                         break;
                     case 3:
-                        getAppDetailSettingIntent(MainActivity.this);
+                        getAppDetailSettingIntent("com.pili.pldroid.playerdemo");
+                        break;
+                    case 4:
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                        intent.setData(Uri.parse("https://fir.im/b4qv"));
+                        startActivity(intent);
                         break;
                 }
             }
@@ -62,16 +68,16 @@ public class MainActivity extends AppCompatActivity {
         }
         return cpuinfo;
     }
-    private void getAppDetailSettingIntent(Context context) {
+    private void getAppDetailSettingIntent(String packgename) {
         Intent localIntent = new Intent();
         localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         if (Build.VERSION.SDK_INT >= 9) {
             localIntent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
-            localIntent.setData(Uri.fromParts("package", getPackageName(), null));
+            localIntent.setData(Uri.fromParts("package", packgename, null));
         } else if (Build.VERSION.SDK_INT <= 8) {
             localIntent.setAction(Intent.ACTION_VIEW);
             localIntent.setClassName("com.android.settings","com.android.settings.InstalledAppDetails");
-            localIntent.putExtra("com.android.settings.ApplicationPkgName", getPackageName());
+            localIntent.putExtra("com.android.settings.ApplicationPkgName", packgename);
         }
         startActivity(localIntent);
     }
